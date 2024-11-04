@@ -10,20 +10,22 @@ body {
     perspective: 1000px;
     font: 16px/1.4 sans-serif;
     overflow: hidden;
+
     background-color: #232425;
 }
 
 .book {
     display: flex;
+    
     margin: auto;
-    width: 300px;
+    width: 330px;
     /*1* let pointer event go trough pages of lower Z than .book */
     pointer-events: none;
     transform-style: preserve-3d;
     transition: translate 1s;
     translate: calc(min(var(--c), 1) * 50%) 0%;
     /* DEMO ONLY: incline on the X axis for pages preview */
-    rotate: 1 0 0 30deg;
+    rotate: 1 0 0 17deg;
 }
 
 .page {
@@ -33,6 +35,7 @@ body {
     flex: none;
     display: flex;
     width: 100%;
+    height: 600px;
     /*1* allow pointer events on pages */
     pointer-events: all;
     user-select: none;
@@ -40,7 +43,7 @@ body {
     border: 1px solid #0008;
     transform-origin: left center;
     transition: transform 1s,
-        rotate 1s ease-in
+        rotate 0.5s ease-in
             calc((min(var(--i), var(--c)) - max(var(--i), var(--c))) * 50ms);
     translate: calc(var(--i) * -100%) 0px 0px;
     transform: translateZ(
@@ -55,7 +58,7 @@ body {
     width: 100%;
     padding: 2rem;
     backface-visibility: hidden;
-    background-color: #fff;
+    background-color: #33a1d4;
     /* Fix backface visibility Firefox: */
     translate: 0px;
 }
