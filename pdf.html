@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pdf-render</title>
+</head>
+<body>
+    <div id="pdf-container">
+        <canvas id="pdf-render"></canvas>
+      </div>
+      <div id="navigation">
+        <button id="prev-page">Previous Page</button>
+        <span>Page: <span id="page-num"></span> / <span id="page-count"></span></span>
+        <button id="next-page">Next Page</button>
+      </div>
+      
+
+
+      <script>
+     const pdfUrl = './Deen-e-Ilahi-UR (1).pdf';
+
+// Set up PDF.js worker
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js';
+
+let pdfDoc = null,
+    pageNumber = 1,
+    scale = 1,
+    canvas = document.getElementById('pdf-render'),
+    ctx = canvas.getContext('2d');
+
+// Load the PDF document
+pdfjsLib.getDocument(pdfUrl).promise.then(pdfDoc_ => {
+  pdfDoc = pdfDoc_;
+  document.getElementById('page-count').textContent = pdfDoc.numPages;
+  
+
+  renderPage(pageNumber);
+});
+
+// Render a specific page
+function renderPage(num) {
+  pdfDoc.getPage(num).then(page => {
+    const viewport = page.getViewport({ scale: scale });
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+
+    const renderContext = {
+      canvasContext: ctx,
+      viewport: viewport
+    };
+    page.render(renderContext).promise.then(() => {
+      document.getElementById('page-num').textContent = num;
+    });
+  });
+}
+
+// Event listeners for pagination
+document.getElementById('prev-page').addEventListener('click', () => {
+  if (pageNumber <= 1) return;
+  pageNumber--;
+  renderPage(pageNumber);
+});
+
+document.getElementById('next-page').addEventListener('click', () => {
+  if (pageNumber >= pdfDoc.numPages) return;
+  pageNumber++;
+  renderPage(pageNumber);
+});
+
+    </script>
+</body>
+</html>
