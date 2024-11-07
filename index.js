@@ -1,7 +1,8 @@
 const mod = (n, m) => ((n % m) + m) % m; // Fix negative Modulo
 const elBook = document.querySelector(".book");
 
-const pdfUrl = "/Deen-e-Ilahi-UR (1).pdf";
+const pdfUrl = "Deen-e-Ilahi-UR (1).pdf";
+
 
 // // Set up PDF.js worker
 pdfjsLib.GlobalWorkerOptions.workerSrc =
@@ -14,7 +15,7 @@ let pdfDoc = null,
 function getPage() {
   const ccc = elBook?.getAttribute("--c");
   console.log(ccc, "ccccc");
-  return ccc + 1;
+  return ccc;
 }
 let tot;
 // Load the PDF document
