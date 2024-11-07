@@ -126,3 +126,17 @@ function renderPage(num) {
 
 
 
+function pressArrow(arrow){
+  // Create a new KeyboardEvent for the "ArrowRight" key
+const event = new KeyboardEvent("keydown", {
+  key: arrow,
+  code: "ArrowRight",
+  keyCode: 39, // The keyCode for the right arrow key
+  which: 39,
+  bubbles: true
+});
+
+// Dispatch the event on the document
+document.dispatchEvent(event);
+
+}

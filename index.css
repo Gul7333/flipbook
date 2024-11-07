@@ -28,6 +28,19 @@ body {
     /* DEMO ONLY: incline on the X axis for pages preview */
     rotate: 1 0 0 17deg;
 }
+@media (min-width: 330px) {
+    .book {
+        width: 290px;
+
+
+    }
+    body{
+        perspective: 700px;
+justify-content: left;
+
+    }
+}
+
 
 
 .pdf-render{
