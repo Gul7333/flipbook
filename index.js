@@ -5,6 +5,7 @@ const pdfUrl = "./Deen-e-Ilahi-UR (1).pdf";
 const progressBar = document.getElementById('pdf-progress');
 const progressText = document.getElementById('progress-text');
 elBook.style.display = "none"
+
 const loader = document.querySelector(".loader")
 const endFlipSound = new Audio("./sounds/end-flip.mp3")
 const startFlipSound = new Audio("./sounds/start-flip.mp3")
