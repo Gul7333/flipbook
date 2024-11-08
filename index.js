@@ -11,6 +11,7 @@ const startFlipSound = new Audio("./sounds/start-flip.mp3")
 
 
 // Function to update the progress bar
+
 function updateProgress(data) {
     const percent = Math.floor((data.loaded / data.total) * 100);
     console.log(data.loaded,"ppppppppppppp")
