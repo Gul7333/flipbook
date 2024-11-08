@@ -2,6 +2,29 @@ const mod = (n, m) => ((n % m) + m) % m; // Fix negative Modulo
 const elBook = document.querySelector(".book");
 
 const pdfUrl = "./Deen-e-Ilahi-UR (1).pdf";
+const progressBar = document.getElementById('pdf-progress');
+const progressText = document.getElementById('progress-text');
+elBook.style.display = "none"
+const loader = document.querySelector(".loader")
+const endFlipSound = new Audio("./sounds/end-flip.mp3")
+const startFlipSound = new Audio("./sounds/start-flip.mp3")
+
+
+// Function to update the progress bar
+function updateProgress(data) {
+    const percent = Math.floor((data.loaded / data.total) * 100);
+    console.log(data.loaded,"ppppppppppppp")
+    progressBar.value = percent;
+    progressText.textContent = `${percent}%`;
+    if(percent == 100){
+
+loader.style.display = "none"
+elBook.style.display = "flex"
+progressBar.style.display = "none"
+
+    }
+}
+
 
 
 // // Set up PDF.js worker
@@ -19,7 +42,10 @@ function getPage() {
 }
 let tot;
 // Load the PDF document
-pdfjsLib.getDocument(pdfUrl).promise.then((pdfDoc_) => {
+
+const pdf = pdfjsLib.getDocument(pdfUrl)
+pdf.onProgress = updateProgress
+pdf.promise.then((pdfDoc_) => {
   pdfDoc = pdfDoc_;
   // elBook?.textContent = ""
   tot = pdfDoc.numPages
@@ -59,9 +85,9 @@ let c = 0; // Current page index
 const openPage = (index) => {
   c = mod(index, tot + 1);
   if (c === tot || c === 0) {
-    playSound("./sounds/end-flip.mp3");
+    endFlipSound.play()
   } else {
-    playSound("./sounds/start-flip.mp3");
+    startFlipSound.play()
   }
 
   elBook.style.setProperty("--c", c);
