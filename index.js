@@ -2,32 +2,28 @@ const mod = (n, m) => ((n % m) + m) % m; // Fix negative Modulo
 const elBook = document.querySelector(".book");
 
 const pdfUrl = "./Deen-e-Ilahi-UR (1).pdf";
-const progressBar = document.getElementById('pdf-progress');
-const progressText = document.getElementById('progress-text');
-elBook.style.display = "none"
+const progressBar = document.getElementById("pdf-progress");
+const progressText = document.getElementById("progress-text");
+elBook.style.display = "none";
 
-const loader = document.querySelector(".loader")
-const endFlipSound = new Audio("./sounds/end-flip.mp3")
-const startFlipSound = new Audio("./sounds/start-flip.mp3")
 
+const loader = document.querySelector(".loader");
+const endFlipSound = new Audio("./sounds/end-flip.mp3");
+const startFlipSound = new Audio("./sounds/start-flip.mp3");
 
 // Function to update the progress bar
 
 function updateProgress(data) {
-    const percent = Math.floor((data.loaded / data.total) * 100);
-    console.log(data.loaded,"ppppppppppppp")
-    progressBar.value = percent;
-    progressText.textContent = `${percent}%`;
-    if(percent == 100){
-
-loader.style.display = "none"
-elBook.style.display = "flex"
-progressBar.style.display = "none"
-
-    }
+  const percent = Math.floor((data.loaded / data.total) * 100);
+  console.log(data.loaded, "ppppppppppppp");
+  progressBar.value = percent;
+  progressText.textContent = `${percent}%`;
+  if (percent == 100) {
+    loader.style.display = "none";
+    elBook.style.display = "flex";
+    progressBar.style.display = "none";
+  }
 }
-
-
 
 // // Set up PDF.js worker
 pdfjsLib.GlobalWorkerOptions.workerSrc =
@@ -45,12 +41,12 @@ function getPage() {
 let tot;
 // Load the PDF document
 
-const pdf = pdfjsLib.getDocument(pdfUrl)
-pdf.onProgress = updateProgress
+const pdf = pdfjsLib.getDocument(pdfUrl);
+pdf.onProgress = updateProgress;
 pdf.promise.then((pdfDoc_) => {
   pdfDoc = pdfDoc_;
   // elBook?.textContent = ""
-  tot = pdfDoc.numPages
+  tot = pdfDoc.numPages;
 
   // document.getElementById('page-count').textContent = pdfDoc.numPages;
   // Method 1: Using a loop with innerHTML
@@ -72,51 +68,50 @@ pdf.promise.then((pdfDoc_) => {
     renderPage(i + 1);
   }
 
-  main()
+  main();
 });
 
-
-function main(){
+function main() {
   const elsPages = elBook.querySelectorAll(".page");
 
-  
-const tot = elsPages.length;
+  const tot = elsPages.length;
 
-let c = 0; // Current page index
+  let c = 0; // Current page index
 
-const openPage = (index) => {
-  c = mod(index, tot + 1);
-  if (c === tot || c === 0) {
-    endFlipSound.play()
-  } else {
-    startFlipSound.play()
-  }
+  const openPage = (index) => {
+    c = mod(index, tot + 1);
+    if (c === tot || c === 0) {
+      endFlipSound.play();
+    } else {
+      console.log("start sound playing")
+      startFlipSound.play();
+    }
 
-  elBook.style.setProperty("--c", c);
-};
+    elBook.style.setProperty("--c", c);
+  };
 
-elsPages.forEach((page, i) => {
-  page.style.setProperty("--i", i);
-  page.addEventListener("click", (evt) => {
-    c = !!evt.target.closest(".back") ? i : i + 1;
-    openPage(c);
+  elsPages.forEach((page, i) => {
+    page.style.setProperty("--i", i);
+    page.addEventListener("click", (evt) => {
+      c = !!evt.target.closest(".back") ? i : i + 1;
+      openPage(c);
+    });
   });
-});
 
-function playSound(audioSrc) {
-  const audio = new Audio(audioSrc);
-  audio.play();
-}
-addEventListener("keydown", (evt) => {
-  if (evt.key === "ArrowLeft" || evt.key === "ArrowRight") {
-    evt.preventDefault();
-    c += evt.key === "ArrowRight" ? +1 : -1;
-    openPage(c);
-    // renderPage(c + 1);
+  function playSound(audioSrc) {
+    const audio = new Audio(audioSrc);
+    audio.play();
   }
-});
+  addEventListener("keydown", (evt) => {
+    if (evt.key === "ArrowLeft" || evt.key === "ArrowRight") {
+      evt.preventDefault();
+      c += evt.key === "ArrowRight" ? +1 : -1;
+      openPage(c);
+      // renderPage(c + 1);
+    }
+  });
 
-openPage(c);
+  openPage(c);
 }
 
 // ---------------------------------------------------------------------------
@@ -152,19 +147,16 @@ function renderPage(num) {
     });
 }
 
-
-
-function pressArrow(arrow){
+function pressArrow(arrow) {
   // Create a new KeyboardEvent for the "ArrowRight" key
-const event = new KeyboardEvent("keydown", {
-  key: arrow,
-  code: "ArrowRight",
-  keyCode: 39, // The keyCode for the right arrow key
-  which: 39,
-  bubbles: true
-});
+  const event = new KeyboardEvent("keydown", {
+    key: arrow,
+    code: "ArrowRight",
+    keyCode: 39, // The keyCode for the right arrow key
+    which: 39,
+    bubbles: true,
+  });
 
-// Dispatch the event on the document
-document.dispatchEvent(event);
-
+  // Dispatch the event on the document
+  document.dispatchEvent(event);
 }
