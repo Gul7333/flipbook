@@ -1,7 +1,7 @@
 const mod = (n, m) => ((n % m) + m) % m; // Fix negative Modulo
 const elBook = document.querySelector(".book");
 
-const pdfUrl = "./Deen-e-Ilahi-UR (1).pdf";
+const pdfUrl = "./The-Religion-of-God.pdf";
 const progressBar = document.getElementById("pdf-progress");
 const progressText = document.getElementById("progress-text");
 elBook.style.display = "none";

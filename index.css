@@ -3,7 +3,7 @@
 }
 
 body {
-    /* or any other parent wrapper */
+    
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -11,15 +11,13 @@ body {
     perspective: 1200px;
     font: 16px/1.4 sans-serif;
     overflow: hidden;
-
     background-color: #232425;
-    
 }
 
 .book {
     display: flex;
-    
     margin: auto;
+    /* margin-bottom: 20px; */
     width: 330px;
     /*1* let pointer event go trough pages of lower Z than .book */
     pointer-events: none;
